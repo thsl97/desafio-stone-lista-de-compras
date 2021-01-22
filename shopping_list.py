@@ -32,8 +32,9 @@ class ShoppingList:
 
     def calculate_payment_per_email(self) -> Union[str, dict]:
         """
-        Calculates the value which every email will pay. Every email pays the same price, and in case of a remainder
-        value, the last email on the list pays. Returns error message if either item list of email list is empty
+        Calculates the value which every email will pay. Every email pays the same price rounded down, and the remainder
+        accumulates. Finally, the remainder is distributed to the n last items of the email list, where n is the total
+        accumulated remainder.
         :returns: dictionary where the key is the email and the value is the price that email will áy
         :rtype: Union[str, dict]
         """
@@ -41,12 +42,13 @@ class ShoppingList:
             return 'There are no items in the shopping list. Please insert at least one item and try again'
         if len(self.email_list) == 0:
             return 'There are no emails in the shopping list. Please insert at least one email and try again'
-        total_per_email = math.floor(self.item_list_total_price // len(self.email_list))
+        total_per_email = self.item_list_total_price // len(self.email_list)
         remainder_value = self.item_list_total_price % len(self.email_list)
+        emails_to_add_remainder = self.email_list[-remainder_value:]
         price_per_email = {}
-        for counter, email in enumerate(self.email_list):
-            price_per_email[email] = total_per_email
-            # if there is a remainder value and it's the last loop, add the remainder to the price of the email
-            if remainder_value > 0 and counter == len(self.email_list) - 1:
-                price_per_email[email] = math.ceil(total_per_email + remainder_value)
+        for email in self.email_list:
+            price_per_email[email] = math.floor(total_per_email)
+            remainder_value += self.item_list_total_price % len(self.email_list)
+            if email in emails_to_add_remainder:
+                price_per_email[email] += 1
         return price_per_email
