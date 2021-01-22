@@ -27,7 +27,7 @@ class ShoppingList:
         """
         total = 0
         for item in self.item_list:
-            total += item.price
+            total += item.total_price
         return total
 
     def calculate_payment_per_email(self) -> Union[str, dict]:
