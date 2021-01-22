@@ -1,4 +1,5 @@
 import math
+from typing import Union
 
 from item import Item
 
@@ -29,13 +30,17 @@ class ShoppingList:
             total += item.price
         return total
 
-    def calculate_payment_per_email(self) -> dict:
+    def calculate_payment_per_email(self) -> Union[str, dict]:
         """
         Calculates the value which every email will pay. Every email pays the same price, and in case of a remainder
-        value, the last email on the list pays
+        value, the last email on the list pays. Returns error message if either item list of email list is empty
         :returns: dictionary where the key is the email and the value is the price that email will áy
-        :rtype: dict
+        :rtype: Union[str, dict]
         """
+        if len(self.item_list) == 0:
+            return 'There are no items in the shopping list. Please insert at least one item and try again'
+        if len(self.email_list) == 0:
+            return 'There are no emails in the shopping list. Please insert at least one email and try again'
         total_per_email = math.floor(self.item_list_total_price // len(self.email_list))
         remainder_value = self.item_list_total_price % len(self.email_list)
         price_per_email = {}
