@@ -1,5 +1,5 @@
 from main.item import Item
-from shopping_list import ShoppingList
+from main.shopping_list import ShoppingList
 
 
 def main():
