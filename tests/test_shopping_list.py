@@ -1,7 +1,7 @@
 import unittest
 
-from item import Item
-from shopping_list import ShoppingList
+from main.item import Item
+from main.shopping_list import ShoppingList
 
 
 class TestShoppingList(unittest.TestCase):
@@ -16,8 +16,8 @@ class TestShoppingList(unittest.TestCase):
 
     def test_shopping_list_returns_price_per_email(self):
         shopping_list = ShoppingList(self.item_list, self.email_list)
-        self.assertEqual(shopping_list.calculate_payment_per_email(),
-                         {'user1@example.com': 150, 'user2@example.com': 150})
+        self.assertEqual({'user1@example.com': 150, 'user2@example.com': 150},
+                         shopping_list.calculate_payment_per_email())
 
     def test_shopping_list_returns_price_per_email_without_remainder(self):
         item_list = [Item(quantity=1, price=100)]

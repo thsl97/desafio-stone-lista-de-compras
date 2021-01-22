@@ -1,4 +1,4 @@
-from item import Item
+from main.item import Item
 from shopping_list import ShoppingList
 
 

@@ -1,7 +1,7 @@
 import math
 from typing import Union
 
-from item import Item
+from main.item import Item
 
 
 class ShoppingList:
@@ -49,6 +49,6 @@ class ShoppingList:
         for email in self.email_list:
             price_per_email[email] = math.floor(total_per_email)
             remainder_value += self.item_list_total_price % len(self.email_list)
-            if email in emails_to_add_remainder:
+            if remainder_value > 0 and email in emails_to_add_remainder:
                 price_per_email[email] += 1
         return price_per_email
